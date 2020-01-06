@@ -26,7 +26,7 @@
                 </div>
                 <div class="btns">
                   <van-button type="info">立即购买</van-button>
-                  <van-button type="danger" @click="addCar">加入购物车</van-button>
+                  <van-button type="danger" @click="addCar(value)">加入购物车</van-button>
                 </div>
 
             </div>
@@ -104,7 +104,7 @@ export default {
       }, 500)
     },
     // 加入购物车
-    addCar: async function () {
+    addCar: async function (number) {
       // this.$store.commit('add', this.value)
       // 获取购物车中商品的数据
       const { data: res } = await this.$http.get(`/api/goods/getshopcarlist/` + this.paramsId)

@@ -5,6 +5,7 @@ import Vant from 'vant'
 import 'vant/lib/index.css'
 import './libs/rem'
 import './assets/css/global.css'
+import './assets/font/iconfont.js'
 import store from './store.js'
 import './plugins/vant.js'
 import './mockjs/index.js'
@@ -12,7 +13,12 @@ import './mockjs/index.js'
 import axios from 'axios'
 axios.defaults.baseURL = 'http://www.liulongbin.top:3005/'
 Vue.prototype.$http = axios
-
+axios.interceptors.request.use(config => {
+  // NProgress.start()
+  // Do something before request is sent
+  config.headers.Authorization = window.sessionStorage.getItem('token')
+  return config
+})
 Vue.config.productionTip = false
 Vue.use(Vant)
 

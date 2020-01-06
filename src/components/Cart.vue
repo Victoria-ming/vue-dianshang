@@ -21,11 +21,11 @@
     <van-pull-refresh v-else v-model="isLoading" success-text="刷新成功" @refresh="onRefresh">
       <div class="van-pull-refresh__track" style="transition: all 300ms ease 0s;">
         <div class="van-pull-refresh__head"></div>
-        <div style="min-height: 200px;">
+        <div style="min-height: 200px;" class="cart">
           <!-- 单元格实现左滑出现删除 -->
-          <van-swipe-cell>
+          <van-swipe-cell  v-for="(item,i) in googslist" :key="i">
             <!-- card结构 -->
-            <van-card v-for="(item,i) in googslist" :key="i" :num="item.cou" :price="item.sell_price" :title="item.title"  :thumb="item.thumb_path">
+            <van-card :num="item.cou" :price="item.sell_price" :title="item.title"  :thumb="item.thumb_path">
                 <div slot="footer">
                     <van-stepper v-model="item.cou" integer
                     @plus="plus(item.cou,item.sell_price)" @minus="minus(item.cou,item.sell_price)"/>
@@ -33,7 +33,7 @@
             </van-card>
 
             <template slot="right">
-              <van-button class="delete" square type="danger" text="删除" />
+              <van-button class="delete" square type="danger" text="删除" @click="remove(item.id)" />
             </template>
           </van-swipe-cell>
         </div>
@@ -88,24 +88,15 @@ export default {
       this.$router.push('/shop')
     },
     hanlde () {
-      this.$router.push('/home')
+      this.$router.go(-1)
     },
     list () {
-      // const itemsId = this.ids.join(',')
-      // const { data: res } = await this.$http.get(`/api/goods/getshopcarlist/` + itemsId)
-      // if (res.status !== 0) return
-      // this.googslist = res.message
-      // console.log(this.googslist)
       this.googslist = this.shopNews
       this.googslist.forEach(item => {
         console.log(item.cou + '---------------------' + item.sell_price)
         this.price += item.cou * item.sell_price
         this.result += item.cou
       })
-      // console.log(this.googslist)
-      // console.log(this.shopNews.cou, this.shopNews.sell_price)
-      // this.price += this.shopNews.cou * this.shopNews.sell_price
-      // console.log(this.price)
     },
     onRefresh () {
       setTimeout(() => {
@@ -114,40 +105,15 @@ export default {
         this.count++
       }, 500)
     },
-    // position 为关闭时点击的位置
-    // instance 为对应的 SwipeCell 实例
-    beforeClose ({ position, instance }) {
-      switch (position) {
-        case 'left':
-        case 'cell':
-        case 'outside':
-          instance.close()
-          break
-        case 'right':
-          // eslint-disable-next-line no-undef
-          Dialog.confirm({
-            message: '确定删除吗？'
-          }).then(() => {
-            instance.close()
-          })
-          break
-      }
-    },
-    btnAdd () {
-      if (this.count >= this.stock) {
-        alert('该宝贝不能购买更多了~')
-      } else {
-        this.count++
-      }
-    },
 
-    btnMinute (count) {
-      if (this.count <= 1) {
-        alert('该宝贝不能减少了哟~')
-      } else {
-        this.count--
-      }
+    remove: function (id) {
+      const obj = this.googslist.some(item =>
+        item.id === id
+      )
+      this.googslist = this.googslist.splice(obj, 1)
+      this.$store.commit('change1', this.googslist)
     }
+
   }
 }
 </script>
@@ -171,5 +137,8 @@ export default {
   display: block;
   line-height: 30px;
   text-align: center;
+}
+.cart{
+  margin-bottom: 50px;
 }
 </style>

@@ -36,7 +36,7 @@ import Contact from '../components/Contact.vue'
 Vue.use(VueRouter)
 
 const routes = [
-  { path: '/', redirect: '/register' },
+  { path: '/', redirect: '/home' },
   { path: '/register', component: Register },
   { path: '/home',
     component: Home,
