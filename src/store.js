@@ -10,10 +10,6 @@ Vue.prototype.$http = axios
 export default new Vuex.Store({
   state: {
     shopId: '',
-    // 传入购物车中的id
-    ids: [],
-    // 购物车上的数值
-    sum: 0,
     // 传入购物车的数据对象的集合
     shopNews: []
   },
@@ -21,27 +17,35 @@ export default new Vuex.Store({
     add: function (state, value) {
       state.sum += value
     },
-    change: function (state, value) {
-      state.sum = value
+    change: function (state, id, type) {
+      if (type === 'plus') {
+        state.shopNews.forEach(item => {
+          if (item.id === id) {
+            item.cou++
+          }
+        })
+      } else if (type === 'minus') {
+        state.shopNews.forEach(item => {
+          if (item.id === id) {
+            item.cou--
+          }
+        })
+      }
     },
-    change1: function (state, array) {
-      state.shopNews = array
+    remove: function (state, id) {
+      const index = state.shopNews.findIndex(item => item.id === id)
+      state.shopNews.splice(index, 1)
     },
     addshop: function (state, news) {
       // 加入购物车的商品信息对象加入一个数组中
-      if (state.shopNews.length < 1) {
-        state.shopNews.push(news)
-        state.ids.push(news.id)
+      var flag = state.shopNews.some(item => {
+        return item.id === news.id
+      })
+      if (flag) {
+        var index = state.shopNews.findIndex(item => item.id === news.id)
+        state.shopNews[index].cou += news.cou
       } else {
-        state.shopNews.forEach(item => {
-          if (item.id === news.id) {
-            console.log(item)
-            return state.shopNews
-          } else {
-            state.shopNews.push(news)
-            state.ids.push(news.id)
-          }
-        })
+        state.shopNews.push(news)
       }
     },
     itemId (state, id) {
@@ -52,7 +56,14 @@ export default new Vuex.Store({
 
   },
   getters: {
-
+    // 购物车上的数值
+    sum (state) {
+      var all = 0
+      state.shopNews.forEach(item => {
+        all += item.cou
+      })
+      return all
+    }
   },
   modules: {
   },

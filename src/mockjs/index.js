@@ -50,10 +50,42 @@ Mock.mock('http://www.liulongbin.top:3005/user/type', 'get', function () {
 Mock.mock('http://www.liulongbin.top:3005/user', 'post', function () {
   return {
     id: 'jd_4fd90e635963',
-    username: 'jd_4fd90e635963',
+    username: 'admin',
+    password: '123456',
+    token: 1111111111111,
     image: 'https://img11.360buyimg.com/jdphoto/s120x120_jfs/t21160/90/706848746/2813/d1060df5/5b163ef9N4a3d7aa6.png',
     jd: 999,
     jiangpai: '铜牌',
+    data: 200,
     jpimage: 'http://wq.360buyimg.com/fd/base/img/my/icon_vip.png'
   }
+})
+// 分类的tab栏数据接口
+Mock.mock('http://www.liulongbin.top:3005/Tabttitle', 'get', {
+  status: 0,
+  message: '成功',
+  'data|20': [{ // 随机生成20条数据
+    'id': '@increment(1)', // 左侧tab栏ID号
+    title: '@cword( 2, 4 )' // 左侧tab栏名称
+  }]
+
+})
+
+Mock.mock(/\/item\/content/, 'get', function (options) {
+  console.log(options)
+
+  return Mock.mock({
+    status: 0,
+    message: '成功',
+    'data|3-5': [{
+      'id': '@increment(41)', // 左侧tab栏ID号,从41
+      title: '@cword( 2, 4 )',
+      'children|6-12': [{
+        id: '@increment(5087)',
+        // img_url: '@image(90x90)',
+        img_url: 'https://img14.360buyimg.com/focus/s140x140_jfs/t14695/63/288523646/4107/7aa3924f/5a28d3f4Nb4c85cf1.jpg',
+        pic_name: '@ctitle(2,4)'
+      }]
+    }]
+  })
 })

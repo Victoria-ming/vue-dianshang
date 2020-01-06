@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import Vant from 'vant'
+import axios from 'axios'
 import 'vant/lib/index.css'
 import './libs/rem'
 import './assets/css/global.css'
@@ -10,7 +11,11 @@ import store from './store.js'
 import './plugins/vant.js'
 import './mockjs/index.js'
 
-import axios from 'axios'
+// 引入预验证
+import VccValidate from 'vcc-validate'
+
+Vue.use(VccValidate)
+
 axios.defaults.baseURL = 'http://www.liulongbin.top:3005/'
 Vue.prototype.$http = axios
 axios.interceptors.request.use(config => {
