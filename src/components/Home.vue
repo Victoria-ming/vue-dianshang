@@ -11,7 +11,7 @@
                         <div>首页</div>
                     </div>
                </van-tabbar-item>
-               <van-tabbar-item  to="/classify">
+               <van-tabbar-item  to="/classlist">
                     <div class="tubiao">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-dingdan"></use>
@@ -36,12 +36,12 @@
                         <div>搜索</div>
                     </div>
                </van-tabbar-item>
-    </van-tabbar>
+      </van-tabbar>
     </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   data () {
@@ -60,7 +60,8 @@ export default {
     }
   },
   computed: {
-    ...mapState(['sum'])
+    ...mapGetters(['sum'])
+
   }
 
 }
@@ -75,8 +76,8 @@ img{
     width: 80px;
     height: 80px;
 }
-.van-tabbar--fixed {
-    height: 60px;
+.van-tabbar{
+   height: 60px;
    box-shadow: 0 3px 14px 2px rgba(0,0,0,.12);
 }
 

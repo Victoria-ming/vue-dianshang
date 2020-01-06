@@ -2,7 +2,7 @@
 <template>
   <div>
     <van-nav-bar title="黑马程序员.vat" left-text="返回" left-arrow @click-left="hanlde" />
-    <div v-if="googslist.lenght === 0">
+    <div v-if="flag">
       <van-image
         round
         width="130px"
@@ -18,17 +18,17 @@
     </div>
 
     <!-- 下拉刷新 -->
-    <van-pull-refresh v-else v-model="isLoading" success-text="刷新成功" @refresh="onRefresh">
+    <van-pull-refresh v-model="isLoading" success-text="刷新成功" @refresh="onRefresh"  v-else-if="flag1">
       <div class="van-pull-refresh__track" style="transition: all 300ms ease 0s;">
         <div class="van-pull-refresh__head"></div>
         <div style="min-height: 200px;" class="cart">
           <!-- 单元格实现左滑出现删除 -->
-          <van-swipe-cell  v-for="(item,i) in googslist" :key="i">
+          <van-swipe-cell  v-for="(item,i) in shopNews" :key="i">
             <!-- card结构 -->
             <van-card :num="item.cou" :price="item.sell_price" :title="item.title"  :thumb="item.thumb_path">
                 <div slot="footer">
                     <van-stepper v-model="item.cou" integer
-                    @plus="plus(item.cou,item.sell_price)" @minus="minus(item.cou,item.sell_price)"/>
+                    @plus="plus(item.id)" @minus="minus(item.id)"/>
                 </div>
             </van-card>
 
@@ -38,9 +38,10 @@
           </van-swipe-cell>
         </div>
       </div>
+    <van-submit-bar :loading="loading" :price="sum* 100" button-text="提交订单" @submit="onSubmit" />
+
     </van-pull-refresh>
 
-    <van-submit-bar :loading="loading" :price="price*100" button-text="提交订单" @submit="onSubmit" />
   </div>
 </template>
 
@@ -54,35 +55,37 @@ export default {
       loading: false,
       count: 1,
       isLoading: false,
-      googslist: [],
-      // 购物车中的总价
-      price: 0,
-      // 购物车上的数值
-      result: 0
+      // 购物车空的时候
+      flag: true,
+      // 购物车有数据的
+      flag1: false
+
     }
   },
   created () {
     this.list()
   },
   computed: {
-    ...mapState(['sum', 'shopId', 'ids', 'shopNews'])
+    ...mapState(['shopId', 'shopNews']),
+    sum () {
+      let all = 0
+      this.shopNews.forEach(item => {
+        all += item.cou * item.sell_price
+      })
+      return all
+    }
   },
   methods: {
     onSubmit () {
       this.loading = !this.loading
     },
     // 点击增加按钮触发
-    plus: function (cou, price) {
-      this.price += price
-      this.result++
-      this.$store.commit('change', this.result)
-      console.log(this.result)
+    plus: function (id) {
+      this.$store.commit('change', id, 'plus')
     },
     // 点击减少按钮触发
-    minus: function (cou, price) {
-      this.price -= price
-      this.result--
-      this.$store.commit('change', this.result)
+    minus: function (id) {
+      this.$store.commit('change', id, 'minus')
     },
     logout () {
       this.$router.push('/shop')
@@ -91,12 +94,13 @@ export default {
       this.$router.go(-1)
     },
     list () {
-      this.googslist = this.shopNews
-      this.googslist.forEach(item => {
-        console.log(item.cou + '---------------------' + item.sell_price)
-        this.price += item.cou * item.sell_price
-        this.result += item.cou
-      })
+      if (this.shopNews.length === 0) {
+        this.flag = true
+        this.flag1 = false
+      } else {
+        this.flag = false
+        this.flag1 = true
+      }
     },
     onRefresh () {
       setTimeout(() => {
@@ -107,11 +111,8 @@ export default {
     },
 
     remove: function (id) {
-      const obj = this.googslist.some(item =>
-        item.id === id
-      )
-      this.googslist = this.googslist.splice(obj, 1)
-      this.$store.commit('change1', this.googslist)
+      this.$store.commit('remove', id)
+      this.list()
     }
 
   }

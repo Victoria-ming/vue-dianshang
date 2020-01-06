@@ -19,7 +19,7 @@
                     <img src="../../public/img/menu3.png" alt="">
                     <van-grid-item text="商品购买" />
             </van-grid-item>
-                <van-grid-item>
+                <van-grid-item to="/pinlun?id=88">
                     <img src="../../public/img/menu4.png" alt="">
                     <van-grid-item text="留言反馈" />
             </van-grid-item>

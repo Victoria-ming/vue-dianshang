@@ -1,5 +1,7 @@
 <template>
   <div>
+    <van-nav-bar title="黑马程序员.vant" left-text="返回" left-arrow @click-left="onClickLeft"/>
+
     <div class="pinglun">
       <b>发表评论</b>
     </div>
@@ -26,7 +28,7 @@
             <template slot="title">
               <span
                 class="custom-title"
-              >第{{list.length-index}}楼 用户：{{item.user_name}} 发表时间：{{(item.add_time).substr(0,10)}}</span>
+              >第{{list.length-index}}楼 用户：{{item.user_name}} 发表时间：{{item.add_time.substr(0,10)}}</span>
             </template>
           </van-cell>
           <van-cell>
@@ -56,6 +58,9 @@ export default {
         'api/getcomments/' + id + '?pageindex=' + this.paging
       )
       this.list = res.message
+    },
+    onClickLeft () {
+      this.$router.go(-1)
     },
     async handle () {
       var id = this.$route.params && this.$route.params.id

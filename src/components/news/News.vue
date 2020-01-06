@@ -22,16 +22,47 @@
         <van-loading size="24px" type="spinner" color="#1989fa">加载中...</van-loading>
       </van-pull-refresh>
     </div>
-    <van-tabbar v-model="active">
-      <van-tabbar-item icon="wap-home">首页</van-tabbar-item>
-      <van-tabbar-item icon="contact" to="/member">会员</van-tabbar-item>
-      <van-tabbar-item icon="cart-o" info="0" to="/cat">购物车</van-tabbar-item>
-      <van-tabbar-item icon="search" to="/search" route>搜索</van-tabbar-item>
-    </van-tabbar>
+     <van-tabbar v-model="active">
+               <van-tabbar-item  to="/home">
+                    <div class="tubiao">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-shouye"></use>
+                        </svg>
+                        <div>首页</div>
+                    </div>
+               </van-tabbar-item>
+               <van-tabbar-item  to="/classlist">
+                    <div class="tubiao">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-dingdan"></use>
+                        </svg>
+                        <div>分类</div>
+                    </div>
+                </van-tabbar-item>
+               <van-tabbar-item @click="isLogin">
+                    <div class="tubiao">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-wode"></use>
+                        </svg>
+                        <div>会员</div>
+                    </div>
+               </van-tabbar-item>
+               <van-tabbar-item icon="cart-o" :info='sum' to="/cat">购物车</van-tabbar-item>
+               <van-tabbar-item  to="/search" route>
+                    <div class="tubiao">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-chazhao"></use>
+                        </svg>
+                        <div>搜索</div>
+                    </div>
+               </van-tabbar-item>
+      </van-tabbar>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import { formatDate } from '../../assets/js/date.js'
 export default {
   data () {
@@ -55,6 +86,13 @@ export default {
   },
 
   methods: {
+    isLogin () {
+      if (!window.sessionStorage.getItem('token')) {
+        this.$router.push('/register')
+      } else {
+        this.$router.push('/user')
+      }
+    },
     getList () {
       setTimeout(async () => {
         const { data: res } = await this.$http.get('api/getnewslist')
@@ -78,6 +116,10 @@ export default {
       this.$router.push('/details/' + id)
       console.log()
     }
+  },
+  computed: {
+    ...mapGetters(['sum'])
+
   }
 }
 </script>

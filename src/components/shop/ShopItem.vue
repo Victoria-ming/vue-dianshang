@@ -41,7 +41,7 @@
                 </div>
                 <div class="btns">
                   <van-button plain type="info" size="large" @click="jieshao(paramsId)">图文介绍</van-button>
-                  <van-button plain type="danger" size="large">商品评论</van-button>
+                  <van-button plain type="danger" size="large" @click="pinlun(paramsId)">商品评论</van-button>
                 </div>
             </div>
         </div>
@@ -121,13 +121,18 @@ export default {
       console.log(this.shopNew)
       this.$store.commit('add', this.value)
       this.$store.commit('addshop', this.shopNew)
-      this.$toast.success('成功加入')
+      this.$toast.success('成功加入购物车')
     },
     // 商品介绍
     jieshao: function (id) {
       console.log(this.paramsId)
       this.$router.push('/goodsdesc?' + this.paramsId)
+    },
+    // 评论
+    pinlun: function (id) {
+      this.$router.push(`/pinlun?id=${id}`)
     }
+
   }
 }
 </script>

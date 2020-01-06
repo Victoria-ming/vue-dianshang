@@ -18,7 +18,7 @@
                         <div>分类</div>
                     </div>
                 </van-tabbar-item>
-               <van-tabbar-item   to="/userinfo">
+               <van-tabbar-item @click="isLogin">
                     <div class="tubiao">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-wode"></use>
@@ -35,12 +35,12 @@
                         <div>搜索</div>
                     </div>
                </van-tabbar-item>
-    </van-tabbar>
+      </van-tabbar>
     </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   data () {
@@ -50,11 +50,19 @@ export default {
     }
   },
   methods: {
-
+    isLogin () {
+      if (!window.sessionStorage.getItem('token')) {
+        this.$router.push('/register')
+      } else {
+        this.$router.push('/user')
+      }
+    }
   },
   computed: {
-    ...mapState(['sum'])
+    ...mapGetters(['sum'])
+
   }
+
 }
 </script>
 <style lang="less" scoped>
