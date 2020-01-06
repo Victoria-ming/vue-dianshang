@@ -4,8 +4,9 @@
        <van-number-keyboard safe-area-inset-bottom />
   </div>
 </template>
-<script>
+<script src="./iconfont.js"></script>
 
+<script>
 export default {
   name: 'app'
 

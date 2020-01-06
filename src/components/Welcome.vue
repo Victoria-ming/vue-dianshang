@@ -7,11 +7,11 @@
                 </van-swipe-item>
         </van-swipe>
         <van-grid :border="false" :column-num="3">
-                <van-grid-item >
+                <van-grid-item to="/news">
                     <img src="../../public/img/menu1.png" alt="">
                     <van-grid-item text="新闻资讯" />
                 </van-grid-item>
-                <van-grid-item>
+                <van-grid-item to="/piclist">
                 <img src="../../public/img/menu2.png" alt="">
                     <van-grid-item text="图片分享" />
                 </van-grid-item>
@@ -27,7 +27,7 @@
                     <img src="../../public/img/menu5.png" alt="">
                     <van-grid-item text="视频专区" />
             </van-grid-item>
-                <van-grid-item>
+                <van-grid-item to="/contact">
                     <img src="../../public/img/menu6.png" alt="">
                     <van-grid-item text="联系我们" />
             </van-grid-item>

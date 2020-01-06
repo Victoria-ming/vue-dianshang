@@ -1,14 +1,13 @@
 <template>
     <div>
-      <router-view/>
 
-      <van-tabbar v-model="active">
+        <van-tabbar v-model="active">
                <van-tabbar-item icon="wap-home" to="/home">首页</van-tabbar-item>
                <van-tabbar-item icon="orders-o" to="/classify">分类</van-tabbar-item>
                <van-tabbar-item icon="contact"  to="/userinfo">会员</van-tabbar-item>
                <van-tabbar-item icon="cart-o" :info='sum' to="/cat">购物车</van-tabbar-item>
                <van-tabbar-item icon="search"  to="/search" route>搜索</van-tabbar-item>
-    </van-tabbar>
+        </van-tabbar>
     </div>
 </template>
 
@@ -19,7 +18,7 @@ export default {
   data () {
     return {
 
-      active: 0
+      active: 1
     }
   },
   methods: {
@@ -28,22 +27,8 @@ export default {
   computed: {
     ...mapState(['sum'])
   }
-
 }
 </script>
-
 <style lang="less" scoped>
-
-.van-swipe{
-    height: 200px;
-}
-img{
-    width: 80px;
-    height: 80px;
-}
-.van-tabbar--fixed {
-    height: 60px;
-   box-shadow: 0 3px 14px 2px rgba(0,0,0,.12);
-}
 
 </style>

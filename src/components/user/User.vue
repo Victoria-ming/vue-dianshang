@@ -16,5 +16,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
+.userBox {
+  height: 100%;
+}
 </style>

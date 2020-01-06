@@ -55,10 +55,17 @@ import { mapState } from 'vuex'
 export default {
   data: function () {
     return {
+      // 商品的详情参数
       shopitem: [],
+      // 轮播图图片的地址
       images: [],
+      // 购买数量中的数值
       value: 1,
-      paramsId: 0
+      // 当前图片的id值，可以传入到图文介绍和购物车中
+      paramsId: 0,
+      // 购物车商品的信息
+      shopNew: {}
+
     }
   },
   created () {
@@ -97,8 +104,24 @@ export default {
       }, 500)
     },
     // 加入购物车
-    addCar: function () {
+    addCar: async function () {
+      // this.$store.commit('add', this.value)
+      // 获取购物车中商品的数据
+      const { data: res } = await this.$http.get(`/api/goods/getshopcarlist/` + this.paramsId)
+      // console.log(res.message[0])
+      res.message[0].cou = this.value
+      // 获取商品加入购物车时存入的数量
+      this.shopNew = {
+        cou: res.message[0].cou,
+        id: res.message[0].id,
+        sell_price: res.message[0].sell_price,
+        thumb_path: res.message[0].thumb_path,
+        title: res.message[0].title
+      }
+      console.log(this.shopNew)
       this.$store.commit('add', this.value)
+      this.$store.commit('addshop', this.shopNew)
+      this.$toast.success('成功加入')
     },
     // 商品介绍
     jieshao: function (id) {
