@@ -29,5 +29,6 @@ module.exports = {
     externals: {
       'BMap': 'BMap'
     }
-  }
+  },
+  publicPath: './'
 }
