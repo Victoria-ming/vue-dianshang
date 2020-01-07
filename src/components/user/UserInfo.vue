@@ -2,7 +2,7 @@
   <div class="UserInfoBox">
     <!-- 顶部信息 -->
     <van-nav-bar title="会员中心" left-text left-arrow @click-left="onClickLeft">
-      <van-icon name="ellipsis" slot="right" />
+      <van-icon name="ellipsis" slot="right" @click="confirm"/>
     </van-nav-bar>
 
     <!-- 用户信息 -->
@@ -55,6 +55,10 @@
       <van-field v-model="userInfo.id" :disabled="true" />
       <van-field v-model="userInfo.username" />
     </van-dialog>
+
+    <van-dialog v-model="show1" title="是否退出" show-cancel-button @confirm="loginout">
+
+    </van-dialog>
   </div>
 </template>
 
@@ -65,7 +69,8 @@ export default {
       userInfo: {},
 
       // 弹出框变量
-      show: false
+      show: false,
+      show1: false
     }
   },
   // 0待付款， 1待收货  2已完成
@@ -86,6 +91,14 @@ export default {
     // 修改用户信息
     editUser () {
       this.show = true
+    },
+    confirm () {
+      this.show1 = true
+    },
+    loginout () {
+      window.sessionStorage.clear()
+      this.$router.push('/register')
+      this.$toast.success('退出成功')
     },
     // 售后路由
     sale () {

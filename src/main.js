@@ -12,6 +12,9 @@ import './plugins/vant.js'
 import './mockjs/index.js'
 // 引入预验证
 import VccValidate from 'vcc-validate'
+// 导入 NProgress 包对应的JS和CSS
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 
 Vue.use(VccValidate)
 
@@ -20,7 +23,15 @@ Vue.prototype.$http = axios
 axios.interceptors.request.use(config => {
   // NProgress.start()
   // Do something before request is sent
+  NProgress.start()
+
   config.headers.Authorization = window.sessionStorage.getItem('token')
+  return config
+})
+axios.interceptors.response.use(config => {
+  // console.log(config)
+  NProgress.done()
+  // 在最后必须 return config
   return config
 })
 Vue.config.productionTip = false

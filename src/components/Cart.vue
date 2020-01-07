@@ -38,7 +38,7 @@
           </van-swipe-cell>
         </div>
       </div>
-    <van-submit-bar :loading="loading" :price="sum* 100" button-text="提交订单" @submit="onSubmit" />
+    <van-submit-bar :loading="loading" :price="sum" button-text="提交订单" @submit="onSubmit" />
 
     </van-pull-refresh>
 
@@ -70,7 +70,7 @@ export default {
     sum () {
       let all = 0
       this.shopNews.forEach(item => {
-        all += item.cou * item.sell_price
+        all += item.cou * item.sell_price * 100
       })
       return all
     }

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <van-nav-bar title="黑马程序员.vant" left-text="返回" left-arrow @click-left="onClickLeft"/>
 
     <div class="pinglun">
       <b>发表评论</b>
