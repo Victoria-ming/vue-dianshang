@@ -52,7 +52,6 @@ Mock.mock('http://www.liulongbin.top:3005/user', 'post', function () {
     id: 'jd_4fd90e635963',
     username: 'admin',
     password: '123456',
-    token: 1111111111111,
     image: 'https://img11.360buyimg.com/jdphoto/s120x120_jfs/t21160/90/706848746/2813/d1060df5/5b163ef9N4a3d7aa6.png',
     jd: 999,
     jiangpai: '铜牌',
@@ -86,6 +85,29 @@ Mock.mock(/\/item\/content/, 'get', function (options) {
         img_url: 'https://img14.360buyimg.com/focus/s140x140_jfs/t14695/63/288523646/4107/7aa3924f/5a28d3f4Nb4c85cf1.jpg',
         pic_name: '@ctitle(2,4)'
       }]
+    }]
+  })
+})
+// 产生vedio随机数据
+Mock.mock('http://www.liulongbin.top:3005/vedioTitle', 'get', function () {
+  return Mock.mock({
+    'data|6': [{
+      id: '@id()',
+      title: '@title'
+    }]
+  })
+})
+
+Mock.mock('http://www.liulongbin.top:3005/vedio', 'get', function (id) {
+  return Mock.mock({
+    'data|10': [{
+      id: '@id()',
+      url: 'http://m.360buyimg.com/ceco/jfs/t1/100750/30/9159/38883/5e0aeaffE4cfa2aad/f798c6f46fd28487.jpg!q70.jpg',
+      acthor: '@name',
+      title: '富士拍出你的美，照出你的魅力',
+      acthorImg: 'http://m.360buyimg.com/mobilecms/jfs/t1/93415/31/6666/24145/5df6dcc3E389916c6/264907cd165c5ed1.jpg!q70.jpg',
+      goodNum: Math.ceil(Math.random() * 100 + 1),
+      vedio: 'https://vod.300hu.com/4c1f7a6atransbjngwcloud1oss/0457174d264399704027615233/v.f30.mp4?dockingId=cf1d2990-3aea-421d-8500-92776b858b15&amp;storageSource=3'
     }]
   })
 })

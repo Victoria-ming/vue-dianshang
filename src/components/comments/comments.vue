@@ -13,7 +13,7 @@
           v-model="message"
           rows="2"
           autosize
-          style="border: 1px solid"
+          style="border: 1px solid #ccc"
           type="textarea"
           maxlength="50"
           placeholder="请输入留言"
@@ -81,9 +81,7 @@ export default {
 .pinglun {
   font-size: 20px;
 }
-/* .messageBoard {
 
-} */
 .biaotou {
   background-color: #cccccc;
 }

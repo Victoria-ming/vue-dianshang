@@ -33,6 +33,8 @@ import Classify from '../components/class/ClassList.vue'
 
 // 联系我们
 import Contact from '../components/Contact.vue'
+// 视频专区
+import Vedio from '../components/Vedio.vue'
 
 // 留言评论
 
@@ -51,7 +53,9 @@ const routes = [
       { path: '/goodsdesc', component: Params },
       { path: '/piclist', component: Piclist },
       { path: '/thumimages', component: ItemPic },
-      { path: '/pinlun', component: Pinlun }
+      { path: '/pinlun', component: Pinlun },
+      { path: '/vedio', component: Vedio }
+
     ] },
   { path: '/search', component: Search },
   { path: '/pingLun', component: Pinglun },

@@ -23,7 +23,7 @@
                     <img src="../../public/img/menu4.png" alt="">
                     <van-grid-item text="留言反馈" />
             </van-grid-item>
-                <van-grid-item>
+                <van-grid-item to="/vedio">
                     <img src="../../public/img/menu5.png" alt="">
                     <van-grid-item text="视频专区" />
             </van-grid-item>

@@ -10,7 +10,6 @@ import './assets/font/iconfont.js'
 import store from './store.js'
 import './plugins/vant.js'
 import './mockjs/index.js'
-
 // 引入预验证
 import VccValidate from 'vcc-validate'
 

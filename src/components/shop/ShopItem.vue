@@ -105,7 +105,11 @@ export default {
     },
     // 加入购物车
     addCar: async function (number) {
-      // this.$store.commit('add', this.value)
+      // 判断有没有token
+
+      if (!window.sessionStorage.getItem('token')) {
+        return this.$router.push('/register')
+      }
       // 获取购物车中商品的数据
       const { data: res } = await this.$http.get(`/api/goods/getshopcarlist/` + this.paramsId)
       // console.log(res.message[0])
