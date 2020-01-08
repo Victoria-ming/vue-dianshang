@@ -1,109 +1,102 @@
 <template>
-  <div>
+  <div class="mapBox">
     <div class="top">
-      <van-button icon="arrow-left" @click="goback" />
-      <van-search
-        v-model="value"
-        placeholder="请输入搜索关键词"
-        show-action
-        @search="onSearch"
-      >
-        <div slot="action" @click="onSearch">搜索</div>
-      </van-search>
+      <van-nav-bar title="地图" left-text left-arrow @click-left="onClickLeft"></van-nav-bar>
     </div>
-    <div id="map"></div>
-    <div id="r-result"></div>
+    <div class="mapBox">
+      <div class="seach">
+        <van-search
+          v-model="value"
+          placeholder="请输入搜索关键词"
+          show-action
+          shape="round"
+          @search="onSearch"
+        >
+          <div slot="action" @click="onSearch">搜索</div>
+        </van-search>
+      </div>
+      <baidu-map class="map" :center="center" :zoom="zoom">
+        <bm-geolocation anchor="BMAP_ANCHOR_BOTTOM_RIGHT" :showAddressBar="true" :autoLocation="true"></bm-geolocation>
+        <bm-navigation anchor="BMAP_ANCHOR_TOP_RIGHT" :offset="{width: 10, height: 80}"></bm-navigation>
+        <bm-local-search :keyword="keyword" :auto-viewport="true" :location="center" :forceLocal="true" :autoViewport="true" :selectFirstResult="true" :pageCapacity="4"></bm-local-search>
+      </baidu-map>
+    </div>
   </div>
 </template>
 <script>
-import BMap from 'BMap'
 export default {
-  name: 'Map',
   data () {
     return {
+      id: '',
+      center: '成都',
+      zoom: 13,
       value: '',
-      myKeys: ['黑马程序员']
+      positionList: [],
+      keyword: '黑马'
     }
   },
   methods: {
-    onSearch () {
-      if (this.value.trim().length === 0) {
-        return this.$toast.fail('请输入内容')
-      } else {
-        var arr = []
-        arr.push(this.value)
-        this.myKeys = arr
-        this.createMap(this.myKeys)
-        this.value = ''
-      }
+    handler ({ BMap, map }) {
+      // console.log(BMap, map)
+      this.center.lng = 116.404
+      this.center.lat = 39.915
+      this.zoom = 15
     },
-    createMap (e) {
-      // 百度地图API功能
-      var map = new BMap.Map('map') // 创建Map实例
-      // map.centerAndZoom(new BMap.Point(116.331398, 39.897445), 13)
-      var myKeys = e
-      var local = new BMap.LocalSearch(map, {
-        renderOptions: { map: map, panel: 'r-result' },
-        pageCapacity: 5
-      })
-      local.searchInBounds(myKeys, map.getBounds())
-
-      var point = new BMap.Point(116.331398, 39.897445)
-      map.centerAndZoom(point, 13)
-
-      var geolocation = new BMap.Geolocation()
-      // 开启SDK辅助定位
-      geolocation.enableSDKLocation()
-      geolocation.getCurrentPosition(function (r) {
-        // eslint-disable-next-line no-undef
-        if (this.getStatus() === BMAP_STATUS_SUCCESS) {
-          var mk = new BMap.Marker(r.point)
-          map.addOverlay(mk)
-          map.panTo(r.point)
-        }
-      })
-    },
-    goback () {
+    onClickLeft () {
       this.$router.go(-1)
+    },
+    onSearch () {
+      this.keyword = this.value
     }
   },
   mounted () {
-    this.createMap(this.myKeys)
   }
 }
 </script>
 
 <style scoped lang="less">
-body,
-html,
-#map {
+
+.map {
   width: 100%;
-  height: 100%;
-  margin: 0;
-  font-family: '微软雅黑';
-}
-#map {
   height: 400px;
+}
+.mapBox {
+  position: relative;
+}
+.seach {
+  position: absolute;
   width: 100%;
-  position: fixed;
   top: 0;
   left: 0;
-}
-#r-result {
-  width: 100%;
-  border:0!important;
-}
-.top {
-  height: 38px;
-  display: flex;
-  justify-content: space-between;
+  z-index: 9999;
 }
 .van-search {
-  flex: 1;
-  padding-left:0;
+  background: rgba(255, 255, 255, 0) !important;
 }
-.van-button {
-  border: none;
-  height: 100%;
+.cityList {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100px;
+  height: 100px;
+  background: red;
+}
+.foot {
+  height: 290px;
+  overflow: auto;
+  p {
+    margin: 0;
+    padding: 0;
+  }
+  .title {
+    height: .42rem;
+    font-size: .32rem;
+    color: #000;
+    line-height: .42rem;
+    font-weight: 400;
+  }
+  .address {
+    font-size: 12px;
+  }
 }
 </style>

@@ -16,6 +16,12 @@ import VccValidate from 'vcc-validate'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
+// 引入百度地图
+import BaiduMap from 'vue-baidu-map'
+Vue.use(BaiduMap, {
+  // ak 是在百度地图开发者平台申请的密钥 详见 http://lbsyun.baidu.com/apiconsole/key */
+  ak: 'q8NjyvckoGUEiPYKcvE1xyIDBIjo2rgu'
+})
 Vue.use(VccValidate)
 
 axios.defaults.baseURL = 'http://www.liulongbin.top:3005/'
