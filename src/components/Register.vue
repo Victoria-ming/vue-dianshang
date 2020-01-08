@@ -80,7 +80,7 @@ export default {
       isEyeclor: false,
       userForm: {
         username: 'admin',
-        password: '123456'
+        password: '1234567'
       },
       vccTest: new this.VccValidate()
     }

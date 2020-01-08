@@ -1,4 +1,5 @@
 module.exports = {
+
   chainWebpack: config => {
     // 发布模式
     config.when(process.env.NODE_ENV === 'production', config => {
@@ -25,6 +26,7 @@ module.exports = {
     //   })
     // })
   },
+
   configureWebpack: {
     externals: {
       'BMap': 'BMap'
