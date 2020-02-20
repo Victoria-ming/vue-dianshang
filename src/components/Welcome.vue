@@ -1,6 +1,6 @@
 <template>
     <div>
-        <van-nav-bar  title="黑马程序员.vat"/>
+        <van-nav-bar  title="家家福购物"/>
         <van-swipe :autoplay="2000" indicator-color="white">
                 <van-swipe-item   v-for="(image, index) in images" :key="index">
                     <img :src="image.url" style="height: auto;width: 100%;"/>
